@@ -112,7 +112,6 @@ def create_outlines(view, file_info):
 	cover_profile = file_info["cover_profile"]
 
 	for line in parse_coverage_profile(cover_profile):
-		print(line)
 		if line["count"] == "0" and view.file_name().endswith(line["filename"]):
 			start = int(line["start_line"])
 			end = int(line["end_line"])
