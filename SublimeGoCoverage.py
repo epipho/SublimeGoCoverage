@@ -6,7 +6,7 @@ import re
 import shlex
 
 gopath = os.environ["GOPATH"]
-line_re = re.compile("^(?P<filename>.+):(?P<start_line>[0-9]+).(?P<start_column>[0-9]+),(?P<end_line>[0-9]+).(?P<end_column>[0-9]+) (?P<statements>[0-9]+) (?P<count>[0-9]+)$")
+line_re = re.compile("^.*\\" + os.sep + "(?P<filename>.+):(?P<start_line>[0-9]+).(?P<start_column>[0-9]+),(?P<end_line>[0-9]+).(?P<end_column>[0-9]+) (?P<statements>[0-9]+) (?P<count>[0-9]+)$")
 settings = "SublimeGoCoverage.sublime-settings"
 
 class ShowGoCoverageListener(sublime_plugin.EventListener):
@@ -112,7 +112,6 @@ def create_outlines(view, file_info):
 	cover_profile = file_info["cover_profile"]
 
 	for line in parse_coverage_profile(cover_profile):
-		print(line)
 		if line["count"] == "0" and view.file_name().endswith(line["filename"]):
 			start = int(line["start_line"])
 			end = int(line["end_line"])
